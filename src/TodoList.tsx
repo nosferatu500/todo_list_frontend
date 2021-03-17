@@ -1,17 +1,21 @@
-import React from 'react';
-import { TodoListItem } from './TodoListItem';
+import React from "react";
+import { TodoListItem } from "./TodoListItem";
 
 interface Props {
-    todos: Todo[];
-    toggleTodo: ToggleTodo;
+  todos: Todo[];
+  toggleTodo: ToggleTodo;
 }
 
 export const TodoList: React.FC<Props> = ({ todos, toggleTodo }) => {
-    return (
-        <ul>
-            {todos.map(todo => (
-                <TodoListItem key={todo.timestamp} todo={todo} toggleTodo={toggleTodo} />
-            ))}
-        </ul>
-    );
+  return (
+    <ul>
+      {todos.map((todo) => (
+        <TodoListItem
+          key={todo.timestamp}
+          todo={todo}
+          toggleTodo={toggleTodo}
+        />
+      ))}
+    </ul>
+  );
 };
