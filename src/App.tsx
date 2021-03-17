@@ -4,19 +4,19 @@ import { AddTodoForm } from "./AddTodoForm";
 
 const initialTodos: Todo[] = [
   {
-    timestamp: new Date().toUTCString(),
+    timestamp: Date.now(),
     text: "aaaaaaa",
     complete: true,
   },
   {
-    timestamp: new Date().toUTCString(),
+    timestamp: Date.now() + 1,
     text: "bbbbbb",
     complete: false,
   },
 ];
 
 function App() {
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, setData] = useState(initialTodos);
 
   const toggleTodo = (selectedTodo: Todo) => {
     const newTodos = todos.map((todo) => {
@@ -30,20 +30,35 @@ function App() {
       return todo;
     });
 
-    setTodos(newTodos);
+    setData(newTodos);
   };
 
   const addTodo: AddTodo = (text: string) => {
     const newTodo = {
-      timestamp: new Date().toUTCString(),
+      timestamp: Date.now(),
       text,
       complete: false,
     };
-    setTodos([...todos, newTodo]);
+    setData([...todos, newTodo]);
+  };
+
+  const sortTodos: SortTodos = (sort: string) => {
+    const types: { [key: string]: number } = {
+      asc: 1,
+      desc: -1,
+    };
+    const sorted = [...todos].sort((a, b) =>
+      a.timestamp > b.timestamp ? types[sort] : -types[sort]
+    );
+    setData(sorted);
   };
 
   return (
     <>
+      <select onChange={(e) => sortTodos(e.target.value)}>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
       <TodoList todos={todos} toggleTodo={toggleTodo} />
       <AddTodoForm addTodo={addTodo} />
     </>
