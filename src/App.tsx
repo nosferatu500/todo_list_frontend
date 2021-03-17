@@ -1,7 +1,7 @@
-import React from 'react';
-import { TodoListItem } from './TodoListItem';
+import React, { useState } from 'react';
+import { TodoList } from './TodoList';
 
-const todos: Todo[] = [
+const initialTodos: Todo[] = [
   {
     timestamp: new Date().toUTCString(),
     text: 'aaaaaaa',
@@ -15,12 +15,24 @@ const todos: Todo[] = [
 ];
 
 function App() {
-  return (
-    <ul>
-      <TodoListItem todo={todos[0]} />
-      <TodoListItem todo={todos[1]} />
-    </ul>
-  );
+  const [todos, setTodos] = useState(initialTodos);
+
+  const toggleTodo = (selectedTodo: Todo) => {
+    const newTodos = todos.map(todo => {
+      if (todo === selectedTodo) {
+        return {
+          ...todo,
+          complete:!todo.complete
+        };
+      }
+
+      return todo;
+    });
+
+    setTodos(newTodos);
+  };
+
+  return <TodoList todos={todos} toggleTodo={toggleTodo} />
 }
 
 export default App;
