@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props {
   todo: Todo;
-  toggleTodo: ToggleTodo;
+  toggleTodo: (selectedTodo: Todo) => void;
 }
 
 export const TodoListItem: React.FC<Props> = ({ todo, toggleTodo }) => {

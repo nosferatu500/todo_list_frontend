@@ -3,7 +3,7 @@ import { TodoListItem } from "./TodoListItem";
 
 interface Props {
   todos: Todo[];
-  toggleTodo: ToggleTodo;
+  toggleTodo: (selectedTodo: Todo) => void;
 }
 
 export const TodoList: React.FC<Props> = ({ todos, toggleTodo }) => {

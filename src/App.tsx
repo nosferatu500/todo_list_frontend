@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { TodoList } from "./TodoList";
-import { AddTodoForm } from "./AddTodoForm";
+import { TodoList } from "./components/TodoList";
+import { AddTodoForm } from "./components/AddTodoForm";
+import { SortTodoForm } from "./components/SortTodoForm";
 
 const initialTodos: Todo[] = [
   {
@@ -15,7 +16,7 @@ const initialTodos: Todo[] = [
   },
 ];
 
-function App() {
+const App: React.FC = () => {
   const [todos, setData] = useState(initialTodos);
 
   const toggleTodo = (selectedTodo: Todo) => {
@@ -33,7 +34,7 @@ function App() {
     setData(newTodos);
   };
 
-  const addTodo: AddTodo = (text: string) => {
+  const addTodo = (text: string): void => {
     const newTodo = {
       timestamp: Date.now(),
       text,
@@ -42,7 +43,7 @@ function App() {
     setData([...todos, newTodo]);
   };
 
-  const sortTodos: SortTodos = (sort: string) => {
+  const sortTodos = (sort: string): void => {
     const types: { [key: string]: number } = {
       asc: 1,
       desc: -1,
@@ -55,14 +56,11 @@ function App() {
 
   return (
     <>
-      <select onChange={(e) => sortTodos(e.target.value)}>
-        <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
-      </select>
+      <SortTodoForm sortTodos={sortTodos} />
       <TodoList todos={todos} toggleTodo={toggleTodo} />
       <AddTodoForm addTodo={addTodo} />
     </>
   );
-}
+};
 
 export default App;

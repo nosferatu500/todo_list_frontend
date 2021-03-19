@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 interface Props {
-  addTodo: AddTodo;
+  addTodo: (text: string) => void;
 }
 
 export const AddTodoForm: React.FC<Props> = ({ addTodo }) => {
