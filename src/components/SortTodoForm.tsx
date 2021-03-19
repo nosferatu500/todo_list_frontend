@@ -1,8 +1,8 @@
 import React from "react";
 
-interface Props {
+type Props = {
   sortTodos: (sort: string) => void;
-}
+};
 
 export const SortTodoForm: React.FC<Props> = ({ sortTodos }) => {
   return (

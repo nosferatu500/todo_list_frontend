@@ -26,6 +26,7 @@ module.exports = {
       project: './tsconfig.json',
     },
     rules: {
+      "no-underscore-dangle": [2, { "allow": ['_id'] }],
       'linebreak-style': 'off',
       "import/prefer-default-export": 'off',
       "react/prop-types": 'off',

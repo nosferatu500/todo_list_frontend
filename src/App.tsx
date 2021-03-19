@@ -3,28 +3,30 @@ import { TodoList } from "./components/TodoList";
 import { AddTodoForm } from "./components/AddTodoForm";
 import { SortTodoForm } from "./components/SortTodoForm";
 
-const initialTodos: Todo[] = [
+const initialTodos: ITodo[] = [
   {
-    timestamp: Date.now(),
+    _id: "213",
+    createdAt: new Date().toISOString(),
     text: "aaaaaaa",
-    complete: true,
+    status: true,
   },
   {
-    timestamp: Date.now() + 1,
+    _id: "324",
+    createdAt: new Date(Date.now() + 1).toISOString(),
     text: "bbbbbb",
-    complete: false,
+    status: false,
   },
 ];
 
 const App: React.FC = () => {
-  const [todos, setData] = useState(initialTodos);
+  const [todos, setData] = useState<ITodo[]>(initialTodos);
 
-  const toggleTodo = (selectedTodo: Todo) => {
+  const toggleTodo = (selectedTodo: ITodo) => {
     const newTodos = todos.map((todo) => {
       if (todo === selectedTodo) {
         return {
           ...todo,
-          complete: !todo.complete,
+          status: !todo.status,
         };
       }
 
@@ -35,10 +37,10 @@ const App: React.FC = () => {
   };
 
   const addTodo = (text: string): void => {
-    const newTodo = {
-      timestamp: Date.now(),
+    const newTodo: ITodo = {
+      createdAt: new Date().toISOString(),
       text,
-      complete: false,
+      status: false,
     };
     setData([...todos, newTodo]);
   };
@@ -48,9 +50,12 @@ const App: React.FC = () => {
       asc: 1,
       desc: -1,
     };
-    const sorted = [...todos].sort((a, b) =>
-      a.timestamp > b.timestamp ? types[sort] : -types[sort]
-    );
+    const sorted = [...todos].sort((a, b) => {
+      if (a.createdAt && b.createdAt) {
+        return a.createdAt > b.createdAt ? types[sort] : -types[sort];
+      }
+      throw new Error("sortTodos: Couldn't find createdAt field.");
+    });
     setData(sorted);
   };
 

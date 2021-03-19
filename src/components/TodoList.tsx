@@ -1,20 +1,16 @@
 import React from "react";
 import { TodoListItem } from "./TodoListItem";
 
-interface Props {
-  todos: Todo[];
-  toggleTodo: (selectedTodo: Todo) => void;
-}
+type Props = {
+  todos: ITodo[];
+  toggleTodo: (selectedTodo: ITodo) => void;
+};
 
 export const TodoList: React.FC<Props> = ({ todos, toggleTodo }) => {
   return (
     <ul>
       {todos.map((todo) => (
-        <TodoListItem
-          key={todo.timestamp.toString()}
-          todo={todo}
-          toggleTodo={toggleTodo}
-        />
+        <TodoListItem key={todo._id} todo={todo} toggleTodo={toggleTodo} />
       ))}
     </ul>
   );
