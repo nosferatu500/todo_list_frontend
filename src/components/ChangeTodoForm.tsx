@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 type Props = {
-  saveTodo: (data: ITodo) => void;
+  changeTodo: (data: ITodo, isVisible: boolean) => void;
 };
 
-export const AddTodoForm: React.FC<Props> = ({ saveTodo }) => {
+export const ChangeTodoForm: React.FC<Props> = ({ changeTodo }) => {
   const [data, setData] = useState<ITodo | any>();
 
   const handleForm = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -13,17 +13,17 @@ export const AddTodoForm: React.FC<Props> = ({ saveTodo }) => {
 
   return (
     <form
-      id="add-form"
+      id="change-form"
       onSubmit={(e) => {
         e.preventDefault();
-        saveTodo(data);
-        (document.getElementById("add-text") as HTMLInputElement).value = "";
+        changeTodo(data, false);
+        (document.getElementById("change-text") as HTMLInputElement).value = "";
         setData(undefined);
       }}
     >
-      <input id="add-text" type="text" onChange={handleForm} />
+      <input id="change-text" type="text" onChange={handleForm} />
       <button type="submit" disabled={data === undefined}>
-        Add Todo
+        Update
       </button>
     </form>
   );

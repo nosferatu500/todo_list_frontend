@@ -1,5 +1,5 @@
 interface ITodo {
-  _id?: string;
+  _id: string;
   text: string;
   status: boolean;
   createdAt?: string;

@@ -27,8 +27,9 @@ export const addTodo = async (data: ITodo): Promise<AxiosResponse<Api>> => {
 
 export const updateTodo = async (data: ITodo): Promise<AxiosResponse<Api>> => {
   try {
-    const update: Pick<ITodo, "status"> = {
+    const update: Pick<ITodo, "status" | "text"> = {
       status: data.status,
+      text: data.text,
     };
 
     const result: AxiosResponse<Api> = await axios.put(

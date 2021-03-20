@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { ChangeTodoForm } from "./ChangeTodoForm";
 
 type Props = TodoProps & {
   updateTodo: (todo: ITodo) => void;
@@ -6,6 +7,16 @@ type Props = TodoProps & {
 };
 
 export const TodoItem: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
+  const [visibility, setVisibility] = useState<boolean>();
+  const updated = (updatedTodo: ITodo, isVisible: boolean) => {
+    const update = {
+      ...todo,
+      text: updatedTodo.text,
+    };
+    updateTodo(update);
+
+    setVisibility(isVisible);
+  };
   return (
     <li>
       <label
@@ -15,7 +26,7 @@ export const TodoItem: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
         <input
           id="todoItem"
           type="checkbox"
-          checked={todo.status}
+          defaultChecked={todo.status}
           onClick={(e) => {
             const update = {
               ...todo,
@@ -26,9 +37,13 @@ export const TodoItem: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
         />{" "}
         {todo.text} {todo.createdAt}
       </label>
-      <button type="button" onClick={() => deleteTodo(todo._id!)}>
+      <button type="button" onClick={() => setVisibility(true)}>
+        Change
+      </button>
+      <button type="button" onClick={() => deleteTodo(todo._id)}>
         Delete
       </button>
+      {visibility ? <ChangeTodoForm changeTodo={updated} /> : null}
     </li>
   );
 };

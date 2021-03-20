@@ -17,8 +17,7 @@ const App: React.FC = () => {
     fetchData();
   }, []);
 
-  const saveData = (e: React.FormEvent, newData: ITodo): void => {
-    e.preventDefault();
+  const saveData = (newData: ITodo): void => {
     addTodo(newData)
       .then(({ status, data }) => {
         if (status !== 201) {
