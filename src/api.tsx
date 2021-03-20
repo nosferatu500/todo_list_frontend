@@ -1,13 +1,25 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 
 const url = "http://localhost:4000";
+
+const extractError = (error: AxiosError) => {
+  if (error.response) {
+    return error.response.data?.error.message;
+  }
+
+  if (error.request) {
+    return error.request.data;
+  }
+
+  return "An internal error occurred";
+};
 
 export const getTodos = async (): Promise<AxiosResponse<Api>> => {
   try {
     const result: AxiosResponse<Api> = await axios.get(`${url}/todos`);
     return result;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(extractError(error));
   }
 };
 
@@ -21,7 +33,7 @@ export const addTodo = async (data: ITodo): Promise<AxiosResponse<Api>> => {
     const result: AxiosResponse<Api> = await axios.post(`${url}/todo`, todo);
     return result;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(extractError(error));
   }
 };
 
@@ -38,7 +50,7 @@ export const updateTodo = async (data: ITodo): Promise<AxiosResponse<Api>> => {
     );
     return result;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(extractError(error));
   }
 };
 
@@ -47,6 +59,6 @@ export const deleteTodo = async (_id: string): Promise<AxiosResponse<Api>> => {
     const result: AxiosResponse<Api> = await axios.delete(`${url}/todo/${_id}`);
     return result;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(extractError(error));
   }
 };

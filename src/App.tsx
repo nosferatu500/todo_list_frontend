@@ -19,36 +19,20 @@ const App: React.FC = () => {
 
   const saveData = (newData: ITodo): void => {
     addTodo(newData)
-      .then(({ status, data }) => {
-        if (status !== 201) {
-          throw new Error("saveData error");
-        }
-
-        setData(data.todos);
-      })
-      .catch((err) => console.log(err));
+      .then(({ data }) => setData(data.todos))
+      .catch((err: Error) => console.log(err));
   };
 
   const updateData = (update: ITodo): void => {
     updateTodo(update)
-      .then(({ status, data }) => {
-        if (status !== 200) {
-          throw new Error("updateData error");
-        }
-        setData(data.todos);
-      })
-      .catch((err) => console.log(err));
+      .then(({ data }) => setData(data.todos))
+      .catch((err: Error) => console.log(err));
   };
 
   const deleteData = (_id: string): void => {
     deleteTodo(_id)
-      .then(({ status, data }) => {
-        if (status !== 200) {
-          throw new Error("deleteData error");
-        }
-        setData(data.todos);
-      })
-      .catch((err) => console.log(err));
+      .then(({ data }) => setData(data.todos))
+      .catch((err: Error) => console.log(err));
   };
 
   const sortTodos = (sort: string): void => {
