@@ -1,48 +1,55 @@
-import React, { useState } from "react";
-import { TodoList } from "./components/TodoList";
+import React, { useEffect, useState } from "react";
+import { TodoItem } from "./components/TodoItem";
 import { AddTodoForm } from "./components/AddTodoForm";
 import { SortTodoForm } from "./components/SortTodoForm";
-
-const initialTodos: ITodo[] = [
-  {
-    _id: "213",
-    createdAt: new Date().toISOString(),
-    text: "aaaaaaa",
-    status: true,
-  },
-  {
-    _id: "324",
-    createdAt: new Date(Date.now() + 1).toISOString(),
-    text: "bbbbbb",
-    status: false,
-  },
-];
+import { getTodos, addTodo, updateTodo, deleteTodo } from "./api";
 
 const App: React.FC = () => {
-  const [todos, setData] = useState<ITodo[]>(initialTodos);
+  const [todos, setData] = useState<ITodo[]>([]);
 
-  const toggleTodo = (selectedTodo: ITodo) => {
-    const newTodos = todos.map((todo) => {
-      if (todo === selectedTodo) {
-        return {
-          ...todo,
-          status: !todo.status,
-        };
-      }
-
-      return todo;
-    });
-
-    setData(newTodos);
+  const fetchData = (): void => {
+    getTodos()
+      .then(({ data }) => setData(data.todos))
+      .catch((err: Error) => console.log(err));
   };
 
-  const addTodo = (text: string): void => {
-    const newTodo: ITodo = {
-      createdAt: new Date().toISOString(),
-      text,
-      status: false,
-    };
-    setData([...todos, newTodo]);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const saveData = (e: React.FormEvent, newData: ITodo): void => {
+    e.preventDefault();
+    addTodo(newData)
+      .then(({ status, data }) => {
+        if (status !== 201) {
+          throw new Error("saveData error");
+        }
+
+        setData(data.todos);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const updateData = (update: ITodo): void => {
+    updateTodo(update)
+      .then(({ status, data }) => {
+        if (status !== 200) {
+          throw new Error("updateData error");
+        }
+        setData(data.todos);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const deleteData = (_id: string): void => {
+    deleteTodo(_id)
+      .then(({ status, data }) => {
+        if (status !== 200) {
+          throw new Error("deleteData error");
+        }
+        setData(data.todos);
+      })
+      .catch((err) => console.log(err));
   };
 
   const sortTodos = (sort: string): void => {
@@ -62,8 +69,15 @@ const App: React.FC = () => {
   return (
     <>
       <SortTodoForm sortTodos={sortTodos} />
-      <TodoList todos={todos} toggleTodo={toggleTodo} />
-      <AddTodoForm addTodo={addTodo} />
+      {todos.map((todo: ITodo) => (
+        <TodoItem
+          key={todo._id}
+          updateTodo={updateData}
+          deleteTodo={deleteData}
+          todo={todo}
+        />
+      ))}
+      <AddTodoForm saveTodo={saveData} />
     </>
   );
 };

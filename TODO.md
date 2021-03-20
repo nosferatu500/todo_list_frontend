@@ -5,10 +5,10 @@
     - Text
     - Status
 - [x] Sort by asc/desc
-- [ ] CRUD:
+- [x] CRUD:
     - Create
     - Update
     - Delete
-- [ ] Store all data in persistent storage
-- [ ] RESTful/gRPC/GraphQL
+- [x] RESTful/gRPC/GraphQL
+- [ ] (optional) Design
 - [ ] Publish (GitHub)

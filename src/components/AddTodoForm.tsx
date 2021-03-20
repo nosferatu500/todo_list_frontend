@@ -1,29 +1,26 @@
 import React, { useState } from "react";
 
 type Props = {
-  addTodo: (text: string) => void;
+  saveTodo: (e: React.FormEvent, data: ITodo) => void;
 };
 
-export const AddTodoForm: React.FC<Props> = ({ addTodo }) => {
-  const [text, setText] = useState("");
+export const AddTodoForm: React.FC<Props> = ({ saveTodo }) => {
+  const [data, setData] = useState<ITodo | any>();
+
+  const handleForm = (e: React.FormEvent<HTMLInputElement>): void => {
+    setData({ ...data, [e.currentTarget.id]: e.currentTarget.value });
+  };
 
   return (
-    <form>
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-        }}
-      />
-      <button
-        type="submit"
-        onClick={(e) => {
-          e.preventDefault();
-          addTodo(text);
-          setText("");
-        }}
-      >
+    <form
+      id="add-form"
+      onSubmit={(e) => {
+        saveTodo(e, data);
+        (document.getElementById("text") as HTMLInputElement).value = "";
+      }}
+    >
+      <input id="text" type="text" onChange={handleForm} />
+      <button type="submit" disabled={data === undefined}>
         Add Todo
       </button>
     </form>
