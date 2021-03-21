@@ -21,8 +21,17 @@ export const ChangeTodoForm: React.FC<Props> = ({ changeTodo }) => {
         setData(undefined);
       }}
     >
-      <input id="change-text" type="text" onChange={handleForm} />
-      <button type="submit" disabled={data === undefined}>
+      <input
+        className="input is-success is-small"
+        id="change-text"
+        type="text"
+        onChange={handleForm}
+      />
+      <button
+        className="button is-success is-small"
+        type="submit"
+        disabled={data === undefined}
+      >
         Update
       </button>
     </form>

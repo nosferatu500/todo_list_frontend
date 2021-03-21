@@ -10,5 +10,5 @@
     - Update
     - Delete
 - [x] RESTful/gRPC/GraphQL
-- [ ] (optional) Design
+- [x] (optional) Design
 - [ ] Publish (GitHub)

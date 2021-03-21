@@ -21,8 +21,17 @@ export const AddTodoForm: React.FC<Props> = ({ saveTodo }) => {
         setData(undefined);
       }}
     >
-      <input id="add-text" type="text" onChange={handleForm} />
-      <button type="submit" disabled={data === undefined}>
+      <input
+        className="input is-info"
+        id="add-text"
+        type="text"
+        onChange={handleForm}
+      />
+      <button
+        className="button is-info"
+        type="submit"
+        disabled={data === undefined}
+      >
         Add Todo
       </button>
     </form>

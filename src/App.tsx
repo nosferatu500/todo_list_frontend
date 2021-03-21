@@ -51,16 +51,24 @@ const App: React.FC = () => {
 
   return (
     <>
-      <SortTodoForm sortTodos={sortTodos} />
-      {todos.map((todo: ITodo) => (
-        <TodoItem
-          key={todo._id}
-          updateTodo={updateData}
-          deleteTodo={deleteData}
-          todo={todo}
-        />
-      ))}
-      <AddTodoForm saveTodo={saveData} />
+      <div className="wrapper">
+        <div className="card frame">
+          <SortTodoForm sortTodos={sortTodos} />
+          <div className="list-wrapper">
+            {todos.map((todo: ITodo) => (
+              <div className="list-item">
+                <TodoItem
+                  key={todo._id}
+                  updateTodo={updateData}
+                  deleteTodo={deleteData}
+                  todo={todo}
+                />
+              </div>
+            ))}
+          </div>
+          <AddTodoForm saveTodo={saveData} />
+        </div>
+      </div>
     </>
   );
 };
